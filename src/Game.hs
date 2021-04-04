@@ -34,6 +34,10 @@ rule (Game coords ((r, c), isAlive)) = liveNbrs == 3 || (isAlive && liveNbrs == 
 next :: Game Bool -> Game Bool
 next = extend rule
 
+toMatrix :: String -> Matrix Bool
+toMatrix str = fromLists lss where
+    lss = ((== 'O') <$>) <$> lines str
+
 -- a few helpers copied from https://github.com/ChrisPenner/conway/blob/master/src/Conway.hs#L61
 
 neighbourCoords = [(row, col) | row <- [-1..1], 
@@ -44,6 +48,9 @@ makeGame :: Int -> Int -> [Coord] -> Game Bool
 makeGame rows cols whitelist = Game coords ((1, 1), cur) where
     coords = matrix rows cols (`elem` whitelist)
     cur = getElem 1 1 coords
+
+fromMatrix :: Matrix Bool -> Game Bool
+fromMatrix mtx = Game mtx ((1, 1), getElem 1 1 mtx)
 
 render :: Game Bool -> String
 render (Game coords _) = toBlock $ toLists coords where

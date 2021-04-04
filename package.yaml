@@ -24,6 +24,7 @@ dependencies:
 - comonad
 - split
 - matrix
+- directory
 
 library:
   source-dirs: src

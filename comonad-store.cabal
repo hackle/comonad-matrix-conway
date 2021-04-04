@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 7a9c1a16db3972e06e93ff35544d9a309ef6312637b988f846985d4f4deaba35
+-- hash: 8b57cf99dd8e9c71a04e474e67e7b7273e78ae1c689d2132a69c3ab5d791a79e
 
 name:           comonad-store
 version:        0.1.0.0
@@ -35,6 +35,7 @@ library
   build-depends:
       base >=4.7 && <5
     , comonad
+    , directory
     , matrix
     , split
   default-language: Haskell2010
@@ -50,6 +51,7 @@ executable comonad-store-exe
       base >=4.7 && <5
     , comonad
     , comonad-store
+    , directory
     , matrix
     , split
   default-language: Haskell2010
@@ -66,6 +68,7 @@ test-suite comonad-store-test
       base >=4.7 && <5
     , comonad
     , comonad-store
+    , directory
     , matrix
     , split
   default-language: Haskell2010
