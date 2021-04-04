@@ -17,7 +17,6 @@ data Game a = Game {
 -- duplicate + extend
 -- duplicate distributes the focus 
 -- and extend acts on each focus to compute a value respectively
-
 instance Comonad Game where
     extract (Game coords (r, c))= getElem r c coords
     duplicate g@(Game coords focus) = Game games focus where
@@ -35,7 +34,6 @@ next :: Game Bool -> Game Bool
 next = extend rule
 
 -- a few helpers 
-
 neighbourCoords = [(row, col) | row <- [-1..1], 
                                 col <- [-1..1], 
                                 (row, col) /= (0, 0)]
