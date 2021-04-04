@@ -10,7 +10,7 @@ import Data.Matrix
 type Coord = (Int, Int)
 data Game a = Game { 
     coords :: Matrix a
-    , focus :: (Coord, a) 
+    , focus :: Coord 
     } deriving (Functor, Show)
 
 -- the trick of contextual computation with Comonads is all in 
@@ -19,14 +19,15 @@ data Game a = Game {
 -- and extend acts on each focus to compute a value respectively
 
 instance Comonad Game where
-    extract = snd . focus
+    extract (Game coords (r, c))= getElem r c coords
     -- duplicate distributes the focus onto every coordinate
-    duplicate g@(Game coords (pos, _)) = Game games (pos, g) where
+    duplicate g@(Game coords focus) = Game games focus where
         games = mapPos makeOne coords
-        makeOne p v = Game coords (p, v) 
+        makeOne p _ = Game coords p
 
 rule :: Game Bool -> Bool
-rule (Game coords ((r, c), isAlive)) = liveNbrs == 3 || (isAlive && liveNbrs == 2) where
+rule g@(Game coords (r, c)) = liveNbrs == 3 || (isAlive && liveNbrs == 2) where
+    isAlive = extract g
     liveNbrs = length $ filter id neighbours
     neighbours = isAliveOne <$> neighbourCoords `at` (r, c)
     isAliveOne (r, c) = maybe False id $ safeGet r c coords
@@ -45,12 +46,12 @@ neighbourCoords = [(row, col) | row <- [-1..1],
                                 (row, col) /= (0, 0)]
 
 makeGame :: Int -> Int -> [Coord] -> Game Bool
-makeGame rows cols whitelist = Game coords ((1, 1), cur) where
+makeGame rows cols whitelist = Game coords (1, 1) where
     coords = matrix rows cols (`elem` whitelist)
     cur = getElem 1 1 coords
 
 fromMatrix :: Matrix Bool -> Game Bool
-fromMatrix mtx = Game mtx ((1, 1), getElem 1 1 mtx)
+fromMatrix mtx = Game mtx (1, 1)
 
 render :: Game Bool -> String
 render (Game coords _) = toBlock $ toLists coords where
