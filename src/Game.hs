@@ -19,9 +19,10 @@ data Game a = Game {
 -- and extend acts on each focus to compute a value respectively
 instance Comonad Game where
     extract (Game coords (r, c))= getElem r c coords
-    duplicate g@(Game coords focus) = Game games focus where
-        games = mapPos makeOne coords
-        makeOne p _ = Game coords p
+    extend f (Game coords (r, c)) = Game (mapPos (\p _ -> f $ makeOne p) coords) (r, c) where
+    -- duplicate g@(Game coords focus) = Game games focus where
+    --     games = mapPos makeOne coords
+        makeOne p = Game coords p
 
 rule :: Game Bool -> Bool
 rule g@(Game coords (r, c)) = liveNbrs == 3 || (isAlive && liveNbrs == 2) where

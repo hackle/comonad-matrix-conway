@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 8b57cf99dd8e9c71a04e474e67e7b7273e78ae1c689d2132a69c3ab5d791a79e
+-- hash: 2ab913be74d7299cf4b89bf67e10862cdc6fb2ead3a3b4b60c98019f2fb80981
 
 name:           comonad-store
 version:        0.1.0.0
@@ -27,6 +27,7 @@ source-repository head
 
 library
   exposed-modules:
+      Footy
       Game
   other-modules:
       Paths_comonad_store

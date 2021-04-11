@@ -5,6 +5,7 @@ import Control.Concurrent (threadDelay)
 import Control.Monad (forM_)
 import Game
 import System.Directory
+import Footy
 
 tickTime :: Int
 tickTime = 50000
