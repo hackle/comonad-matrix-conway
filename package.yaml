@@ -25,6 +25,7 @@ dependencies:
 - split
 - matrix
 - directory
+- vector
 
 library:
   source-dirs: src

@@ -6,6 +6,7 @@ import Control.Monad (forM_)
 import Game
 import System.Directory
 import Footy
+import Less2
 
 tickTime :: Int
 tickTime = 50000
